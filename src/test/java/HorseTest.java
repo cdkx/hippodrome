@@ -10,12 +10,12 @@ import static org.mockito.Mockito.*;
 class HorseTest {
 
     @Test
-    public void shouldThrowExceptionIfFirstParamConstructorIsNull() {
+    void shouldThrowExceptionIfFirstParamConstructorIsNull() {
         assertThrows(IllegalArgumentException.class, () -> new Horse(null, 1d, 1d));
     }
 
     @Test
-    public void ifFirstParamConstructorIsNullExceptionShouldContainMessage() {
+    void ifFirstParamConstructorIsNullExceptionShouldContainMessage() {
         String expectedMessage = "Name cannot be null.";
         try {
             new Horse(null, 1d, 1d);
@@ -27,14 +27,14 @@ class HorseTest {
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "  ", "\n", "\t", "\f", "\r", "\u000B", "\u001C", "\u001D", "\u001E", "\u001F"})
-    public void shouldThrowIllegalArgumentExceptionIfFirstParamIsBlanc(String paramString) {
+    void shouldThrowIllegalArgumentExceptionIfFirstParamIsBlanc(String paramString) {
         assertThrows(IllegalArgumentException.class, () -> new Horse(paramString, 1d, 1d));
 
     }
 
     @ParameterizedTest
     @ValueSource(strings = {" ", "  ", "\n", "\t", "\f", "\r", "\u000B", "\u001C", "\u001D", "\u001E", "\u001F"})
-    public void ifFirstParamConstructorIsBlancThenExceptionShouldContainMessage(String paramString) {
+    void ifFirstParamConstructorIsBlancThenExceptionShouldContainMessage(String paramString) {
         String expectedMessage = "Name cannot be blank.";
         try {
             new Horse(paramString, 1d, 1d);
@@ -45,12 +45,12 @@ class HorseTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfSecondParamConstructorIsNegative() {
+    void shouldThrowExceptionIfSecondParamConstructorIsNegative() {
         assertThrows(IllegalArgumentException.class, () -> new Horse("string", -5d, 1d));
     }
 
     @Test
-    public void ifSecondParamConstructorIsNegativeThenExceptionShouldContainMessage() {
+    void ifSecondParamConstructorIsNegativeThenExceptionShouldContainMessage() {
         String expectedMessage = "Speed cannot be negative.";
         try {
             new Horse("string", -5d, 1d);
@@ -61,12 +61,12 @@ class HorseTest {
     }
 
     @Test
-    public void shouldThrowExceptionIfThirdParamConstructorIsNegative() {
+    void shouldThrowExceptionIfThirdParamConstructorIsNegative() {
         assertThrows(IllegalArgumentException.class, () -> new Horse("string", 1d, -5d));
     }
 
     @Test
-    public void ifThirdParamConstructorIsNegativeThenExceptionShouldContainMessage() {
+    void ifThirdParamConstructorIsNegativeThenExceptionShouldContainMessage() {
         String expectedMessage = "Distance cannot be negative.";
         try {
             new Horse("string", 1d, -5d);
@@ -113,7 +113,7 @@ class HorseTest {
     }
 
     @ParameterizedTest(name = "method getDistance() should return correct value:\n" +
-                              " * distance + speed * getRandomDouble(0.2, 0.9).")
+                              " distance + speed * getRandomDouble(0.2, 0.9).")
     @CsvSource({
             "1, 2, 2.2, 0.2d", "10, 20, 22, 0.2d", "50, 60, 70, 0.2d",
             "1, 2, 2.3, 0.3d", "10, 20, 23, 0.3d", "50, 200, 215, 0.3d",
@@ -124,12 +124,13 @@ class HorseTest {
             "1, 2, 2.8, 0.8d", "40, 50, 82, 0.8d", "0.254654, 0.355646, 0.573747983456, 0.856464d",
             "1, 2, 2.9, 0.9d", "40, 50, 86, 0.9d", "0.001, 0.001, 0.001009, 0.009d"})
     void shouldReturnCorrectValue(double speed, double distance, double expectedDistance, double randomDouble) {
-
         try (MockedStatic<Horse> mockStatic = mockStatic(Horse.class)) {
             mockStatic.when(() -> Horse.getRandomDouble(anyDouble(), anyDouble())).thenReturn(randomDouble);
             Horse horse = new Horse("Horse", speed, distance);
             horse.move();
+
             double actual = horse.getDistance();
+
             assertEquals(expectedDistance, actual);
         }
     }
