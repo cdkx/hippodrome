@@ -8,7 +8,7 @@
         <file>${HOME_LOG}</file>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>logs/archived/hippodrome.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>logs/archived/hippodrome.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- each archived file, size max 10MB -->
             <maxFileSize>100MB</maxFileSize>
             <!-- total size of all archive files, if total size > 20MB, it will delete old archived file -->
